@@ -10,11 +10,12 @@ import com.rabbitmq.client.impl.AMQBasicProperties;
  * @author May
  * @creat 2022-08-13 11:19
  */
-public class Producer {
+public class ProducerByTTL {
     private static final String EXCHANGE_NORMAL="normal";
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMQUtils.getChannel();
         channel.exchangeDeclare(EXCHANGE_NORMAL, "direct");
+        //过期死信
         AMQP.BasicProperties ttl = new AMQP.BasicProperties().builder().expiration("10000").build();
         for (int i = 0; i < 10; i++) {
             String msg = "消息"+i;
